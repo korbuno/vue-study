@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Vue sample</title>
+</head>
+
+<body>
+  <div id="app">
+    <button>Parent Component</button>
+    <my-global-component></my-global-component>
+    <my-local-component></my-local-component>
+  </div>
+
+  <div id="app2">
+    <my-global-component></my-global-component>
+    <my-local-component></my-local-component>
+  </div>
+
+  <script src="https://unpkg.com/vue@2.3.3"></script>
+  <script>
+    //Global component
+    Vue.component('my-global-component', {
+      template: '<div>A global Component!</div>'
+    });
+
+    //Local component
+    var cmp = {
+      template: '<div>A local Component!</div>'
+    };
+
+    new Vue({
+      el: '#app',
+      components: {
+        // 태그명 : 컴포넌트 내용
+        'my-local-component': cmp
+      }
+    });
+
+    new Vue({
+      el: '#app2',
+      components: {
+        'my-local-component': cmp
+      }
+    });
+  </script>
+</body>
+
+</html>
