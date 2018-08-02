@@ -1,9 +1,10 @@
 <template>
     <div>
         <ul>
-            <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" v-on:click="toggleComplete"></i>
-                <span class="textCompleted" v-bind:class="{textCompleted: todoItem.completed}">
+            <li v-for="(todoItem, index) in todoItems" v-bind:key="index" class="shadow">
+                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" 
+                v-on:click="toggleComplete(todoItem, index)"></i>
+                <span v-bind:class="{textCompleted: todoItem.completed}">
                     {{ todoItem.item }}
                 </span>
                 <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
@@ -26,8 +27,12 @@ export default {
             localStorage.removeItem(todoItem);
             this.todoItems.splice(index, 1);
         },
-        toggleComplete: function() {
+        toggleComplete: function(todoItem, index) {
+            todoItem.completed = !todoItem.completed;
 
+            // 로컬스토리지 데이터 갱신
+            localStorage.removeItem(todoItem.item);
+            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         }
     },
     // 인스턴스 생성 시점 후킹
