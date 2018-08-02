@@ -2,10 +2,12 @@
     <div>
         <ul>
             <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-                <i class="checkBtn fas fa-check" v-on:click="toggleComplete"></i>
-                {{ todoItem }}
+                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" v-on:click="toggleComplete"></i>
+                <span class="textCompleted" v-bind:class="{textCompleted: todoItem.completed}">
+                    {{ todoItem.item }}
+                </span>
                 <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
-                    <i class="fas fa-trash-alt"></i>
+                    <i class="fas fa-trash-alt"></i>  
                 </span>
             </li>
         </ul>
@@ -34,7 +36,7 @@ export default {
             for(var i = 0; i < localStorage.length; i++){
                 if(localStorage.key(i) !== 'loglevel:webpack-dev-server' &&
                 localStorage.key(i) !== 'jenkins:config:showfinder'){
-                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))).item);
+                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
                 }
             }
         }
